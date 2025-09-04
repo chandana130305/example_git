@@ -7,7 +7,7 @@ stage('CheckOut')
 {
 steps
 {
-git branch:'main',url:https://github.com/example-git/examplegit.git'
+git branch:'main',url:https://github.com/chandana130305/example_git.git'
 }
 }
 stage('Deploy')

@@ -1,37 +1,35 @@
-pipline
-{
-agent any
-stages
-{
-stage('CheckOut')
-{
-steps
-{
-git branch:'main',url:https://github.com/chandana130305/example_git.git'
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/chandana130305.git'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    mkdir -p deployed_html
+                    cp crf.html deployed_html/
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            publishHTML(target: [
+                allowMissing: false,
+                keepAll: true,
+                reportDir: 'deployed_html',
+                reportFiles: 'crf.html',
+                reportName: 'My Webpage'
+            ])
+        }
+    }
 }
-}
-stage('Deploy')
-{
-steps
-{
-sh'''
-mkdir-p deployed-html
-cp*html deployed_html
-'''
-}
-}
-}
-post
-{
-success
-{
-publishHTML(target: [
-allowMissing: false,
-keepAll: true,
-reportDir:'deployed_html',
-reportFiles:'crf.html',
-reportName: 'My Webpage'
-])
-}
-}
-}
+
+
+
